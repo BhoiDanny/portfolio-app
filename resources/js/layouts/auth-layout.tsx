@@ -1,9 +1,19 @@
-import AuthLayoutTemplate from '@/layouts/auth/auth-simple-layout';
+import { cn } from '@/lib/utils';
+import { Head } from '@inertiajs/react';
+import { ReactNode } from 'react';
 
-export default function AuthLayout({ children, title, description, ...props }: { children: React.ReactNode; title: string; description: string }) {
+interface AuthLayoutProps {
+    children: ReactNode;
+    title?: string;
+    description?: string;
+    className?: string;
+}
+
+export default function AuthLayout({ children, title, description, className }: AuthLayoutProps) {
     return (
-        <AuthLayoutTemplate title={title} description={description} {...props}>
-            {children}
-        </AuthLayoutTemplate>
+        <>
+            <Head title={title} />
+            <div className={cn('bg-primary/10 flex min-h-screen flex-col items-center justify-center px-4', className)}>{children}</div>
+        </>
     );
 }

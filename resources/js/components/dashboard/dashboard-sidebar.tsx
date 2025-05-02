@@ -3,7 +3,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
 import { SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart, FolderOpen, Home, Settings, User, X } from 'lucide-react';
+import { BarChart, BriefcaseBusiness, FolderOpen, Home, Settings, User, Wrench, X } from 'lucide-react';
 import React from 'react';
 // import { NavLink } from 'react-router-dom';
 
@@ -16,6 +16,8 @@ interface SidebarLink {
 const links: SidebarLink[] = [
     { path: '/dashboard', label: 'Overview', icon: Home },
     { path: '/dashboard/projects', label: 'Projects', icon: FolderOpen },
+    { path: '/dashboard/skills', label: 'Skills', icon: Wrench },
+    { path: '/dashboard/experiences', label: 'Experiences', icon: BriefcaseBusiness },
     { path: '/dashboard/analytics', label: 'Analytics', icon: BarChart },
     { path: '/dashboard/profile', label: 'Profile', icon: User },
     { path: '/dashboard/settings', label: 'Settings', icon: Settings },

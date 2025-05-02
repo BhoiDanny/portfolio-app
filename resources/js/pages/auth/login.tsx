@@ -25,7 +25,6 @@ const Login = ({ canResetPassword, status }: LoginProps) => {
         password: '',
         remember: false,
     });
-
     const handleLogin: FormEventHandler = (e) => {
         e.preventDefault();
 

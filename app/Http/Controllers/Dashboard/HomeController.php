@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Project;
 
 class HomeController extends Controller
 {
@@ -14,9 +17,14 @@ class HomeController extends Controller
         return Inertia::render('dashboard/index');
     }
 
+    /**
+     * @throws \Throwable
+     */
     public function projects()
     {
-        return Inertia::render('dashboard/projects');
+        return Inertia::render('dashboard/projects', [
+            'projects' => Project::paginate()->sortByDesc('created_at')->toResourceCollection(),
+        ]);
     }
 
     public function skills()

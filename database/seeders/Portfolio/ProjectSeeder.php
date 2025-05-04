@@ -92,7 +92,7 @@ class ProjectSeeder extends Seeder
                 'name' => $project['title'],
                 'description' => $project['description'],
                 'image' => $project['image'],
-                'tags' => json_encode($project['tags']),
+                'tags' => $project['tags'],
                 'demo_link' => $project['demoLink'],
                 'github_link' => $project['githubLink'],
                 'featured' => $project['featured'],

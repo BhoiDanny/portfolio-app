@@ -34,10 +34,12 @@ return Application::configure(basePath: dirname(__DIR__))
             //         ->setStatusCode($response->getStatusCode());
             // }
 
-            if ($response->getStatusCode() === 419) {
+            if (in_array($response->getStatusCode(), [403, 419])) {
                 //? attach error message to inertia response
                 return back()->with([
-                    'error' => 'Session expired. Please try again.'
+                    'error' => $response->getStatusCode() === 403
+                        ? 'You are not authorized to access this page.'
+                        : 'Your session has expired. Please try again.',
                 ]);
             }
 

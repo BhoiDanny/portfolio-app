@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('github_link')->nullable();
             $table->boolean('featured')->default(false);
             $table->text('details')->nullable();
-            $table->json('tags')->nullable();
+            $table->json('tags')->nullable()->default(json_encode([]));
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

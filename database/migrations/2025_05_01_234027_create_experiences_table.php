@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('location')->nullable()->default('Remote');
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->text('description')->nullable();    
+            $table->text('description')->nullable();
             $table->string('website')->nullable();
             $table->string('logo')->nullable();
-            $table->json('achievements')->nullable();
+            $table->json('achievements')->nullable()->default(json_encode([]));
             $table->enum('type', ['job', 'internship', 'volunteer'])->default('job');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();

@@ -67,7 +67,7 @@ class ExperienceSeeder extends Seeder
                 'start_date' => $exp['startDate'],
                 'end_date' => $exp['endDate'],
                 'description' => $exp['description'],
-                'achievements' => json_encode($exp['achievements']),
+                'achievements' => $exp['achievements'],
                 'user_id' => User::first()->id,
             ]);
         }

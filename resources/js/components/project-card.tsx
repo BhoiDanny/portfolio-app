@@ -6,11 +6,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 
 interface ProjectCardProps {
     project: Project;
-    handleOpenDialog: (project: Project) => void;
+    handleEditDialog: (project: Project) => void;
     handleDeleteProject: (projectId: string | number) => void;
 }
 
-export default function ProjectCard({ project, handleOpenDialog, handleDeleteProject }: ProjectCardProps) {
+export default function ProjectCard({ project, handleEditDialog, handleDeleteProject }: ProjectCardProps) {
     return (
         <Card key={project.id} className="mb-4">
             <CardHeader className="pb-2">
@@ -40,7 +40,7 @@ export default function ProjectCard({ project, handleOpenDialog, handleDeletePro
             </CardContent>
             <CardFooter>
                 <div className="flex space-x-2">
-                    <Button size="sm" variant="outline" onClick={() => handleOpenDialog(project)} className="flex items-center gap-1">
+                    <Button size="sm" variant="outline" onClick={() => handleEditDialog(project)} className="flex items-center gap-1">
                         <PencilIcon className="h-3.5 w-3.5" />
                         Edit
                     </Button>

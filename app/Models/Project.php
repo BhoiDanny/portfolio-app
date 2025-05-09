@@ -23,13 +23,32 @@ class Project extends Model
     ];
 
 
-    protected function casts()
+    protected function casts(): array
     {
         return [
             'tags' => AsArrayObject::class,
             'featured' => 'boolean',
         ];
     }
+
+    //? mutator
+    // public function getImageAttribute($value): string
+    // {
+    //     return $value ? asset('storage/' . $value) : '/placeholder.svg';
+    // }
+
+    public function projectImage()
+    {
+        return $this->image ? asset('storage/' . $this->image) : '/placeholder.svg';
+    }
+
+    public function deleteImage(): void
+    {
+        if ($this->image) {
+            \Storage::disk('public')->delete($this->image);
+        }
+    }
+
 
     public function user(): BelongsTo
     {

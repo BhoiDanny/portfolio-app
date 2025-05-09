@@ -7,7 +7,7 @@ import { Head } from '@inertiajs/react';
 import React, { useState } from 'react';
 
 interface DashbordLayoutProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     title?: string;
     className?: string;
     [key: string]: any;

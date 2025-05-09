@@ -79,33 +79,36 @@ class StoreProjectRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-   public function validated($key = null, $default = null): array
-   {
-       $validated = parent::validated($key, $default);
+    public function validated($key = null, $default = null): array
+    {
+        $validated = parent::validated($key, $default);
 
-       $this->trimTags($validated);
-       $this->normalizeLinks($validated, 'githubLink', 'github_link');
-       $this->normalizeLinks($validated, 'demoLink', 'demo_link');
-       $this->normalizeLinks($validated, 'title', 'name');
+        $this->trimTags($validated);
+        $this->normalizeLinks($validated, 'githubLink', 'github_link');
+        $this->normalizeLinks($validated, 'demoLink', 'demo_link');
+        $this->normalizeLinks($validated, 'title', 'name');
 
-       //? if image already exists set it to empty
+        //? if image already exists set it to empty
 
+        if (is_null($validated['image'])) {
+            unset($validated['image']);
+        }
 
-       return $validated;
-   }
+        return $validated;
+    }
 
-   private function trimTags(array &$validated): void
-   {
-       if (isset($validated['tags'])) {
-           $validated['tags'] = array_map('trim', $validated['tags']);
-       }
-   }
+    private function trimTags(array &$validated): void
+    {
+        if (isset($validated['tags'])) {
+            $validated['tags'] = array_map('trim', $validated['tags']);
+        }
+    }
 
-   private function normalizeLinks(array &$validated, string $originalKey, string $normalizedKey): void
-   {
-       if (isset($validated[$originalKey])) {
-           $validated[$normalizedKey] = trim($validated[$originalKey]);
-           unset($validated[$originalKey]);
-       }
-   }
+    private function normalizeLinks(array &$validated, string $originalKey, string $normalizedKey): void
+    {
+        if (isset($validated[$originalKey])) {
+            $validated[$normalizedKey] = trim($validated[$originalKey]);
+            unset($validated[$originalKey]);
+        }
+    }
 }

@@ -11,17 +11,22 @@ Route::get('/', function () {
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::prefix('/dashboard')->group(function () {
-        Route::get('/', [HomeController::class, 'index'])->name('dashboard');
-        Route::get('/projects', [HomeController::class, 'projects'])->name('dashboard.projects');
-        Route::get('/skills', [HomeController::class, 'skills'])->name('dashboard.skills');
-        Route::get('/experiences', [HomeController::class, 'experience'])->name('dashboard.experience');
-        Route::get('/profile', [HomeController::class, 'profile'])->name('dashboard.profile');
-        Route::get('/settings', [HomeController::class, 'settings'])->name('dashboard.settings');
+    Route::name('dashboard.')->prefix('/dashboard')->group(function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
+        Route::get('/skills', [HomeController::class, 'skills'])->name('skills');
+        Route::get('/experiences', [HomeController::class, 'experience'])->name('experience');
+        Route::get('/profile', [HomeController::class, 'profile'])->name('profile');
+        Route::get('/settings', [HomeController::class, 'settings'])->name('settings');
 
-        Route::post('/projects/create/project', [ProjectController::class, 'create'])->name('dashboard.projects.create');
-        Route::put('/projects/update/project/{project}', [ProjectController::class, 'update'])->name('dashboard.projects.update');
-        Route::delete('/projects/delete/project/{project}', [ProjectController::class, 'destroy'])->name('dashboard.projects.delete');
+        Route::name('projects.')->prefix('/projects')->group(function () {
+            Route::get('/', [ProjectController::class, 'index'])->name('index');
+            Route::post('/create/project', [ProjectController::class, 'create'])->name('create');
+            Route::put('/update/project/{project}', [ProjectController::class, 'update'])->name('update');
+            Route::delete('/delete/project/{project}', [ProjectController::class, 'destroy'])->name('delete');
+            Route::get('/trashed', [ProjectController::class, 'trashed'])->name('trashed');
+            Route::put('/restore/project/{project}', [ProjectController::class, 'restore'])->name('restore');
+            Route::delete('/delete/project/{project}/permanent', [ProjectController::class, 'forceDelete'])->name('delete.permanent');
+        });
     });
 });
 

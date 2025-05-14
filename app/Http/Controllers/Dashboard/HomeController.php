@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Project;
+use App\Models\Skill;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -10,7 +12,14 @@ class HomeController extends Controller
 
     public function index()
     {
-        return Inertia::render('dashboard/index');
+        return Inertia::render('dashboard/index', [
+            'counts' => [
+                'projects' => Project::count(),
+                'skills' => Skill::count(),
+                // 'experiences' => auth()->user()->experiences()->count(),
+            ],
+            'projects' => Project::latest()->take(5)->get()->toResourceCollection(),
+        ]);
     }
 
 

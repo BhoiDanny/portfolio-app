@@ -1,53 +1,47 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { projects } from '@/data/portfolio-mock-data';
 import DashboardLayout from '@/layouts/dashboard-layout';
-import { BarChart3, Eye, MessageSquare, Users } from 'lucide-react';
+import { ProjectItem } from '@/types/custom';
+import { Link } from '@inertiajs/react';
+import { BriefcaseBusiness, FolderOpen, Users, Wrench } from 'lucide-react';
 
-const stats = [
-    {
-        title: 'Total Projects',
-        value: 22,
-        change: '+10%',
-        icon: FolderIcon,
-    },
-    {
-        title: 'Total Views',
-        value: '12.4K',
-        change: '+24%',
-        icon: EyeIcon,
-    },
-    {
-        title: 'Inquiries',
-        value: 42,
-        change: '+15%',
-        icon: MessageIcon,
-    },
-    {
-        title: 'Visitors',
-        value: '3.2K',
-        change: '+18%',
-        icon: UsersIcon,
-    },
-];
-
-function FolderIcon() {
-    return <BarChart3 className="text-muted-foreground h-5 w-5" />;
+interface DashboardProps {
+    counts: {
+        projects?: number;
+        skills?: number;
+        experiences?: number;
+        visitors?: number;
+    };
+    projects: ProjectItem;
 }
 
-function EyeIcon() {
-    return <Eye className="text-muted-foreground h-5 w-5" />;
-}
-
-function MessageIcon() {
-    return <MessageSquare className="text-muted-foreground h-5 w-5" />;
-}
-
-function UsersIcon() {
-    return <Users className="text-muted-foreground h-5 w-5" />;
-}
-
-const Dashboard = () => {
+const Dashboard = ({ counts, projects }: DashboardProps) => {
+    const stats = [
+        {
+            title: 'Total Projects',
+            value: counts.projects ?? 0,
+            change: '+10%',
+            icon: ProjectIcon,
+        },
+        {
+            title: 'Skills',
+            value: counts.skills ?? 0,
+            change: '+24%',
+            icon: SkillsIcon,
+        },
+        {
+            title: 'Experiences',
+            value: counts.experiences ?? 0,
+            change: '+15%',
+            icon: ExperienceIcon,
+        },
+        {
+            title: 'Visitors',
+            value: counts.visitors ?? 0,
+            change: '+18%',
+            icon: UsersIcon,
+        },
+    ];
     return (
         <DashboardLayout title="Dashboard Overview">
             <div className="space-y-8">
@@ -78,25 +72,34 @@ const Dashboard = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
-                                {projects.slice(0, 5).map((project) => (
+                                {projects.data?.map((project) => (
                                     <div key={project.id} className="bg-muted/50 flex items-center justify-between rounded-lg p-3">
                                         <div className="flex items-center space-x-3">
                                             <div className="bg-secondary/20 flex h-10 w-10 items-center justify-center rounded">
-                                                <BarChart3 className="text-primary h-5 w-5" />
+                                                <FolderOpen className="text-primary h-5 w-5" />
                                             </div>
                                             <div>
                                                 <h4 className="font-medium">{project.title}</h4>
-                                                <p className="text-muted-foreground text-xs">{project.tags.slice(0, 2).join(', ')}</p>
+                                                <p className="text-muted-foreground text-xs">{project.tags.slice(0, 5).join(', ')}</p>
                                             </div>
                                         </div>
-                                        <Button variant="ghost" size="sm">
+                                        {/* <Button variant="ghost" size="sm">
                                             Edit
-                                        </Button>
+                                        </Button> */}
                                     </div>
                                 ))}
-                                <Button variant="outline" className="w-full">
-                                    View All Projects
-                                </Button>
+                                {projects.data?.length === 0 ? (
+                                    <div className="flex h-[320px] flex-col items-center justify-center space-y-6 text-center">
+                                        <p className="text-muted-foreground">No projects found</p>
+                                        <Button variant="outline" asChild>
+                                            <Link href={route('dashboard.projects.index')}>Add Project</Link>
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <Button variant="outline" className="w-full" asChild>
+                                        <Link href={route('dashboard.projects.index')}>View All Projects</Link>
+                                    </Button>
+                                )}
                             </div>
                         </CardContent>
                     </Card>
@@ -120,3 +123,19 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+function ProjectIcon() {
+    return <FolderOpen className="text-muted-foreground h-5 w-5" />;
+}
+
+function SkillsIcon() {
+    return <Wrench className="text-muted-foreground h-5 w-5" />;
+}
+
+function ExperienceIcon() {
+    return <BriefcaseBusiness className="text-muted-foreground h-5 w-5" />;
+}
+
+function UsersIcon() {
+    return <Users className="text-muted-foreground h-5 w-5" />;
+}

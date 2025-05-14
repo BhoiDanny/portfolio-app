@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Portfolio\CategorySeeder;
 use Database\Seeders\Portfolio\ProjectSeeder;
 use Database\Seeders\Portfolio\ExperienceSeeder;
+use Database\Seeders\Portfolio\SkillSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -31,6 +33,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ProjectSeeder::class,
             ExperienceSeeder::class,
+            CategorySeeder::class,
+            SkillSeeder::class,
         ]);
     }
 }

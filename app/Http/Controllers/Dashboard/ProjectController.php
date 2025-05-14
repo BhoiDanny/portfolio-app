@@ -21,7 +21,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function create(StoreProjectRequest $request)
+    public function store(StoreProjectRequest $request)
     {
         $validated = $request->validated();
 

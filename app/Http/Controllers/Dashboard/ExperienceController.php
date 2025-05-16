@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Experience;
 use App\Http\Requests\Dashboard\StoreExperienceRequest;
 use App\Http\Requests\Dashboard\UpdateExperienceRequest;
+use Inertia\Inertia;
 
 class ExperienceController extends Controller
 {
@@ -14,7 +15,9 @@ class ExperienceController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('dashboard/experience/index', [
+            'experiences' => Experience::paginate()->sortByDesc('created_at')->toResourceCollection(),
+        ]);
     }
 
     /**
@@ -30,7 +33,19 @@ class ExperienceController extends Controller
      */
     public function store(StoreExperienceRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+
+            // Handle file upload
+            if ($request->hasFile('logo')) {
+                $validated['logo'] = $request->file('logo')->store('experience_logos', 'public');
+            }
+            auth()->user()->experiences()->create($validated);
+            return to_route('dashboard.experiences.index');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to create experience: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -54,7 +69,23 @@ class ExperienceController extends Controller
      */
     public function update(UpdateExperienceRequest $request, Experience $experience)
     {
-        //
+        $validated = $request->validated();
+
+        try {
+            // Handle file upload
+            if ($request->hasFile('logo')) {
+                //? if the experience already has an image, delete it
+                if ($experience->logo) {
+                    $experience->deleteLogo();
+                }
+                $validated['logo'] = $request->file('logo')->store('experience_logos', 'public');
+            }
+
+            $experience->update($validated);
+            return to_route('dashboard.experiences.index');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to update experience: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -62,6 +93,17 @@ class ExperienceController extends Controller
      */
     public function destroy(Experience $experience)
     {
-        //
+        try {
+            if ($experience->logo) {
+                $experience->deleteLogo();
+            }
+
+            // Delete the experience from the database
+            $experience->forceDelete();
+
+            return to_route('dashboard.experiences.index');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to delete experience: ' . $e->getMessage());
+        }
     }
 }

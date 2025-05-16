@@ -5,26 +5,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
-import { CategoryItem, Skill } from '@/types/custom';
+import { Skill, SlideSheetProps } from '@/types/custom';
 import { LoaderCircle } from 'lucide-react';
-import { FormEventHandler, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Switch } from './ui/switch';
 import { Textarea } from './ui/textarea';
-
-interface SlideSheetProps {
-    isOpen: boolean;
-    setIsOpen: (isOpen: boolean) => void;
-    title?: string;
-    description?: string;
-    data: Skill;
-    categories: CategoryItem;
-    setData: (data: string, value: string | string[] | boolean | number | File) => void;
-    handleSave?: FormEventHandler<HTMLFormElement>;
-    btnTitle?: string;
-    className?: string;
-    processing?: boolean;
-    handleClose?: () => void;
-}
 
 export default function SlideSheet({
     isOpen,
@@ -40,7 +25,7 @@ export default function SlideSheet({
     processing = false,
     handleClose,
     ...props
-}: SlideSheetProps) {
+}: SlideSheetProps<Skill>) {
     const { name, level, category } = data;
 
     const getSkillLevelText = useCallback(
@@ -55,7 +40,7 @@ export default function SlideSheet({
 
     return (
         <Sheet open={isOpen} onOpenChange={setIsOpen} {...props}>
-            <SheetContent className={cn('sm:max-w-lg', className)} onInteractOutside={handleClose}>
+            <SheetContent className={cn('sm:max-w-lg', className)} onInteractOutside={(e) => e.preventDefault()} onCloseAutoFocus={handleClose}>
                 <form onSubmit={handleSave}>
                     <SheetHeader>
                         <SheetTitle>{title ? title : 'Add New Skill'}</SheetTitle>
@@ -97,7 +82,7 @@ export default function SlideSheet({
                                     <SelectValue placeholder="Select a category" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    {categories.data!.length > 0 ? (
+                                    {categories!.data!.length > 0 ? (
                                         categories?.data?.map((category) => (
                                             <SelectItem key={category.id} value={category.slug}>
                                                 {category.name}
@@ -140,7 +125,7 @@ export default function SlideSheet({
                                     Published
                                 </Label>
                                 <Switch
-                                    id="animations"
+                                    id="published"
                                     name="published"
                                     checked={data.published}
                                     onCheckedChange={(checked) => setData('published', checked)}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Skill;
+use App\Models\Experience;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -16,7 +17,7 @@ class HomeController extends Controller
             'counts' => [
                 'projects' => Project::count(),
                 'skills' => Skill::count(),
-                // 'experiences' => auth()->user()->experiences()->count(),
+                'experiences' => Experience::count(),
             ],
             'projects' => Project::latest()->take(5)->get()->toResourceCollection(),
         ]);

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Dashboard\SkillController;
+use App\Http\Controllers\Dashboard\ExperienceController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -34,10 +35,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/create/skill', 'store')->name('create');
             Route::put('/update/skill/{skill}', 'update')->name('update');
             Route::delete('/delete/skill/{skill}', 'destroy')->name('delete');
-            Route::get('/trashed', 'trashed')->name('trashed');
-            Route::put('/restore/skill/{skill}', 'restore')->name('restore');
-            Route::delete('/delete/skill/{skill}/permanent', 'forceDelete')->name('delete.permanent');
+            // Route::get('/trashed', 'trashed')->name('trashed');
+            // Route::put('/restore/skill/{skill}', 'restore')->name('restore');
+            // Route::delete('/delete/skill/{skill}/permanent', 'forceDelete')->name('delete.permanent');
         });
+
+        Route::controller(ExperienceController::class)->prefix('/experiences')->name('experiences.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/create/experience', 'store')->name('create');
+            Route::put('/update/experience/{experience}', 'update')->name('update');
+            Route::delete('/delete/experience/{experience}', 'destroy')->name('delete');
+            // Route::get('/trashed', 'trashed')->name('trashed');
+            // Route::put('/restore/experience/{experience}', 'restore')->name('restore');
+            // Route::delete('/delete/experience/{experience}/permanent', 'forceDelete')->name('delete.permanent');
+        }); 
     });
 });
 

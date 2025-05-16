@@ -18,7 +18,7 @@ const links: SidebarLink[] = [
     { path: '/dashboard/projects', label: 'Projects', icon: FolderOpen },
     { path: '/dashboard/skills', label: 'Skills', icon: Wrench },
     { path: '/dashboard/experiences', label: 'Experiences', icon: BriefcaseBusiness },
-    { path: '/dashboard/analytics', label: 'Analytics', icon: BarChart },
+    { path: '/dashboard', label: 'Analytics', icon: BarChart },
     { path: '/dashboard/profile', label: 'Profile', icon: User },
     { path: '/dashboard/settings', label: 'Settings', icon: Settings },
 ];

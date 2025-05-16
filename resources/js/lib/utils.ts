@@ -18,3 +18,25 @@ export const getSkillLevelBgColor = (level: number) => {
     if (level < 75) return 'bg-blue-500';
     return 'bg-green-500';
 };
+
+export const formatDate = (dateString: string | null) => {
+    if (!dateString) return 'Present';
+    try {
+        const [year, month] = dateString.split('-');
+        return `${month}/${year}`;
+    } catch (error) {
+        return dateString;
+    }
+};
+
+//! format date for input date picker
+
+export const formatDateTime = (dateString: string | null) => {
+    if (!dateString) return;
+    try {
+        const [year, month] = dateString.split('-');
+        return `${year}-${month}`;
+    } catch (error) {
+        return dateString;
+    }
+};

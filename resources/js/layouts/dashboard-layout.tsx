@@ -1,5 +1,6 @@
 import DashboardHeader from '@/components/dashboard/dashboard-header';
 import DashboardSidebar from '@/components/dashboard/dashboard-sidebar';
+import { Toaster as Sonner } from '@/components/ui/sonner';
 import { Toaster } from '@/components/ui/toaster';
 import { useFlash } from '@/hooks/use-flash';
 import { cn } from '@/lib/utils';
@@ -19,7 +20,8 @@ export default function DashboardLayout({ children, title, className }: Dashbord
     return (
         <>
             <Head title={title ?? 'Dashboard'} />
-            <Toaster/>
+            <Toaster />
+            <Sonner />
             <div className={cn('bg-background flex min-h-screen', className)}>
                 <DashboardSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
                 <div className="flex flex-1 flex-col md:ml-64">

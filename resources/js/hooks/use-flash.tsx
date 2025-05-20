@@ -25,5 +25,15 @@ export const useFlash = (variant?: UseFlashProps['variant'], title?: UseFlashPro
             // Clear flash message immediately after showing it
             flash.error = undefined;
         }
+        if (flash?.success) {
+            toast({
+                title: title || 'Success',
+                description: flash.success,
+                variant: variant,
+            });
+
+            // Clear flash message immediately after showing it
+            flash.success = undefined;
+        }
     }, [flash, toast]);
 };

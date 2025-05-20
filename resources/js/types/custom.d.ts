@@ -152,3 +152,42 @@ export interface ExperienceItem {
         prev: string | null;
     };
 }
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    avatar?: string | null;
+    bio?: string;
+    resume_url?: string;
+    occupation?: string;
+    email_verified_at: string | null;
+    created_at?: string;
+    updated_at?: string;
+    [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface About {
+    id?: number;
+    title: string;
+    description: string[];
+    profile_picture?: string | File | null;
+    email?: string;
+    phone?: string;
+    location?: string;
+    address?: string;
+    statistics?: Array<{
+        label?: string;
+        value?: string | number;
+    }>;
+    social_links?: Array<{
+        platform: string;
+        url?: string;
+    }>;
+    trusted_by?: Array<{
+        name: string;
+        logo?: File | string | null;
+        url?: string;
+    }>;
+    [key: string]: unknown; // This allows for additional properties...
+}

@@ -23,21 +23,15 @@ class HomeController extends Controller
         ]);
     }
 
-
-    public function skills()
+    public function analytics()
     {
-        return Inertia::render('dashboard/skills');
+        return Inertia::render('dashboard/analytics');
     }
 
-    public function experience()
-    {
-        return Inertia::render('dashboard/experiences');
-    }
-
-    public function profile()
-    {
-        return Inertia::render('dashboard/profile');
-    }
+    // public function aboutMe()
+    // {
+    //     return Inertia::render('dashboard/about');
+    // }
 
     public function settings()
     {

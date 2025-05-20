@@ -7,6 +7,8 @@ use App\Models\Experience;
 use App\Http\Requests\Dashboard\StoreExperienceRequest;
 use App\Http\Requests\Dashboard\UpdateExperienceRequest;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
+
 
 class ExperienceController extends Controller
 {
@@ -39,7 +41,7 @@ class ExperienceController extends Controller
 
             // Handle file upload
             if ($request->hasFile('logo')) {
-                $validated['logo'] = $request->file('logo')->store('experience_logos', 'public');
+                $validated['logo'] = $request->file('logo')->storeAs('experience_logos', Str::uuid() . '.' . $request->file('logo')->getClientOriginalExtension());
             }
             auth()->user()->experiences()->create($validated);
             return to_route('dashboard.experiences.index');
@@ -78,7 +80,7 @@ class ExperienceController extends Controller
                 if ($experience->logo) {
                     $experience->deleteLogo();
                 }
-                $validated['logo'] = $request->file('logo')->store('experience_logos', 'public');
+                $validated['logo'] = $request->file('logo')->storeAs('experience_logos', Str::uuid() . '.' . $request->file('logo')->getClientOriginalExtension());
             }
 
             $experience->update($validated);

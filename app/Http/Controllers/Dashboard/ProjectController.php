@@ -27,7 +27,7 @@ class ProjectController extends Controller
 
         // Handle file upload
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('projects', 'public');
+            $validated['image'] = $request->file('image')->storeAs('projects', Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension());
         }
 
         // Store the project in the database
@@ -47,7 +47,7 @@ class ProjectController extends Controller
             if ($project->image) {
                 $project->deleteImage();
             }
-            $validated['image'] = $request->file('image')->store('projects', 'public');
+            $validated['image'] = $request->file('image')->store('projects', Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension());
         }
 
         //? check if image exist and not changed

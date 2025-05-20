@@ -1,24 +1,24 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AboutController;
 use App\Http\Controllers\Dashboard\HomeController;
 use App\Http\Controllers\Dashboard\ProjectController;
 use App\Http\Controllers\Dashboard\SkillController;
 use App\Http\Controllers\Dashboard\ExperienceController;
+use App\Http\Controllers\HomeController as HomePageController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('home');
-})->name('home');
+
+Route::get('/', [HomePageController::class, 'home'])->name('home');
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::controller(HomeController::class)->prefix('/dashboard')->name('dashboard.')->group(function () {
         Route::get('/', 'index')->name('home');
-        // Route::get('/skills', 'skills')->name('skills');
-        Route::get('/experiences', 'experience')->name('experience');
-        Route::get('/profile', 'profile')->name('profile');
         Route::get('/settings', 'settings')->name('settings');
+        Route::get('/analytics', 'analytics')->name('analytics');
+        // Route::get('/home/about/me', 'aboutMe')->name('about.me');
 
         Route::controller(ProjectController::class)->prefix('/projects')->name('projects.')->group(function () {
             Route::get('/', 'index')->name('index');
@@ -48,9 +48,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             // Route::get('/trashed', 'trashed')->name('trashed');
             // Route::put('/restore/experience/{experience}', 'restore')->name('restore');
             // Route::delete('/delete/experience/{experience}/permanent', 'forceDelete')->name('delete.permanent');
-        }); 
+        });
+
+        Route::controller(AboutController::class)->prefix('/about')->name('about.')->group(function () {
+            Route::get('/me', 'index')->name('index');
+            Route::post('/me/update', 'update')->name('update');
+        });
     });
 });
 
-// require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

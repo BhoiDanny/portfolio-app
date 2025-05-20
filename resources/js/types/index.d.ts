@@ -30,7 +30,7 @@ export interface SharedData {
     sidebarOpen: boolean;
     flash: {
         error?: string;
-        message?: string;
+        success?: string;
     };
     [key: string]: unknown;
 }
@@ -39,9 +39,12 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    avatar?: string;
+    avatar?: string | null;
+    bio?: string;
+    resume_url?: File | string | null;
+    occupation: string;
     email_verified_at: string | null;
-    created_at: string;
-    updated_at: string;
+    created_at?: string;
+    updated_at?: string;
     [key: string]: unknown; // This allows for additional properties...
 }

@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Portfolio\AboutSeeder;
 use Database\Seeders\Portfolio\CategorySeeder;
 use Database\Seeders\Portfolio\ProjectSeeder;
 use Database\Seeders\Portfolio\ExperienceSeeder;
@@ -35,6 +36,7 @@ class DatabaseSeeder extends Seeder
             ExperienceSeeder::class,
             CategorySeeder::class,
             SkillSeeder::class,
+            AboutSeeder::class,
         ]);
     }
 }

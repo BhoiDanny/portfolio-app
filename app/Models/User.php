@@ -22,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'occupation',
+        'bio',
+        'avatar',
+        'resume_url',
     ];
 
     /**
@@ -55,5 +59,29 @@ class User extends Authenticatable
     public function experiences(): HasMany
     {
         return $this->hasMany(Experience::class);
+    }
+
+    public function avatar()
+    {
+        return $this?->avatar ? asset('storage/' . $this->avatar) : '/placeholder.svg';
+    }
+
+    public function deleteAvatar(): void
+    {
+        if ($this->avatar) {
+            \Storage::disk('public')->delete($this->avatar);
+        }
+    }
+
+    public function resume()
+    {
+        return $this?->resume_url ? asset('storage/' . $this->resume_url) : '/placeholder.svg';
+    }
+
+    public function deleteResume(): void
+    {
+        if ($this->resume_url) {
+            \Storage::disk('public')->delete($this->resume_url);
+        }
     }
 }

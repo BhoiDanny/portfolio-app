@@ -95,3 +95,12 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ### Settings Page
 ![Settings Page](screenshots/Screenshot%202025-05-02%20013915.png)
+
+### Trusted Companies Edit
+![Trusted Comapany Edit](screenshots/Screenshot%202025-05-20%20130729.png)
+
+### Profile Management
+![Profile Management](screenshots/Screenshot%202025-05-20%20130909.png)
+
+### Change Password Screen
+![Change Password](screenshots/Screenshot%202025-05-20%20130922.png)
